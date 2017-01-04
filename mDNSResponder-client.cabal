@@ -1,5 +1,5 @@
 name:                mDNSResponder-client
-version:             1.0.0
+version:             1.0.1
 synopsis:            Library for talking to the mDNSResponder daemon.
 description:
             On OS X, iOS, and Bonjour for Windows, mDNSResponder is
@@ -17,7 +17,9 @@ maintainer:          shea@shealevy.com
 copyright:           (c) 2016, Obsidian Systems LLC
 category:            Network
 build-type:          Simple
-extra-source-files:  ChangeLog.md, include/dnssd_ipc.h
+extra-source-files:  ChangeLog.md,
+                     include/dnssd_ipc.h,
+                     include/dns_sd.h
 cabal-version:       >=1.10
 
 library
