@@ -1,5 +1,9 @@
 # Revision history for mDNSResponder-client
 
+## 1.0.2  -- 2017-01-11
+
+* Bump version bounds for 'base'.
+
 ## 1.0.1  -- 2017-01-03
 
 * Include dns_sd.h to make building portable (running still requires the
