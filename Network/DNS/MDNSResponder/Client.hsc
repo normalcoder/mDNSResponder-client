@@ -303,10 +303,10 @@ connect addr e_handler = bracketOnError makeSocket S.close $ \s -> do
 -- | The default address for the daemon.
 defaultAddr :: IO S.SockAddr
 defaultAddr = do
-  m_def <- lookupEnv #{const_str MDNS_UDS_SERVERPATH_ENVVAR}
+  m_def <- lookupEnv "DNSSD_UDS_PATH" -- Not cross-compilation safe: #{const_str MDNS_UDS_SERVERPATH_ENVVAR}
   let p = case m_def of
             Just p' -> p'
-            Nothing -> #{const_str MDNS_UDS_SERVERPATH}
+            Nothing -> "/var/run/mDNSResponder" -- Not cross-compilation safe: #{const_str MDNS_UDS_SERVERPATH}
   return $ S.SockAddrUnix p
 
 -- | Disconnect from the daemon.

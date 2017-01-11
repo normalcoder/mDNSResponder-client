@@ -1,5 +1,9 @@
 # Revision history for mDNSResponder-client
 
+## 1.0.3  -- 2017-01-11
+
+* Only use cross-safe hsc2hs macros.
+
 ## 1.0.2  -- 2017-01-11
 
 * Bump version bounds for 'base'.

@@ -1,5 +1,5 @@
 name:                mDNSResponder-client
-version:             1.0.2
+version:             1.0.3
 synopsis:            Library for talking to the mDNSResponder daemon.
 description:
             On OS X, iOS, and Bonjour for Windows, mDNSResponder is

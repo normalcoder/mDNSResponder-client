@@ -3,7 +3,7 @@
 }:
 mkDerivation {
   pname = "mDNSResponder-client";
-  version = "1.0.0";
+  version = "1.0.3";
   src = ./.;
   libraryHaskellDepends = [
     base bytestring ctrie data-endian network network-msg transformers
