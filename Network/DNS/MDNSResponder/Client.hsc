@@ -77,9 +77,12 @@ import Network.Socket.Msg
 newtype DNSServiceFlags =
   DNSServiceFlags #{type DNSServiceFlags} deriving (Eq, Bits)
 
+
+instance Semigroup DNSServiceFlags where
+  (<>) = (.|.)
+
 instance Monoid DNSServiceFlags where
   mempty = DNSServiceFlags 0
-  mappend = (.|.)
 
 -- | An index to specify on which interface a service exists.
 newtype InterfaceIndex = InterfaceIndex Word32
@@ -355,7 +358,7 @@ request :: PeekableResponse a
 request (Connection {..}) req handler =
     bracket makeSocks closeSocks $ \(us, them) -> do
       ctx <- atomicModifyIORef' counter (\x -> (x + 1, x + 1))
-      CM.insert ctx (AnyAsyncResponseHandler handler) responseMap
+      _ <- CM.insert ctx (AnyAsyncResponseHandler handler) responseMap
       writeChan requestQueue (AnyRequestRegistration ctx req them)
       recvError us
   where
@@ -558,7 +561,8 @@ sendThread sock chan e_handler sTidVar rTidVar unmask = do
         pokeBody req $ (plusPtr reqptr (ipcMsgHdrSz + 1))
         sendAll sock (castPtr reqptr) full_sz
         alloca $ \cmsgptr -> do
-          poke cmsgptr (S.fdSocket them)
+          S.withFdSocket them $ \fd -> do
+            poke cmsgptr fd
           cmsg <- unsafePackCStringLen (castPtr cmsgptr, #{size int})
           body <- unsafePackCStringLen ((plusPtr reqptr full_sz), 1)
           sendMsg sock body (S.SockAddrUnix "")
